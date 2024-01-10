@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: nodesy-container  
-        image: ooghenekaro/nodejswebapp:latest
+        image: patdada/nodejswebapp:latest
         ports:
         - containerPort: 3000
 
