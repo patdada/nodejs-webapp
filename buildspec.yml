@@ -4,13 +4,13 @@ phases:
   install:
     commands:
       - echo Installing app dependencies...
-      - curl -LO https://dl.k8s.io/release/v1.27.2/bin/linux/arm64/kubectl   
+      - curl -LO https://dl.k8s.io/release/v1.28.2/bin/linux/arm64/kubectl   
       - chmod +x ./kubectl
       - mkdir -p $HOME/bin && cp ./kubectl $HOME/bin/kubectl && export PATH=$PATH:$HOME/bin
       - echo 'export PATH=$PATH:$HOME/bin' >> ~/.bashrc
       - source ~/.bashrc
       - echo 'Check kubectl version'
-      - kubectl version --short --client
+      - kubectl version --client
     
   pre_build:
     commands:
