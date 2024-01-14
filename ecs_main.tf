@@ -5,7 +5,7 @@ provider "aws" {
 
 # Create an ECS cluster
 resource "aws_ecs_cluster" "my_cluster" {
-  name = "adrian-ecs-cluster"
+  name = "ferry-ecs-cluster"
 }
 
 # Use an existing IAM role
