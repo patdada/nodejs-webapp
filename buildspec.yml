@@ -15,6 +15,7 @@ phases:
   pre_build:
     commands:
       - echo Logging in to Amazon ECR...
+      - aws_ecr_password=$(aws ecr get-login-password --region us-east-1 --registry-ids 908778560637)
       - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 908778560637.dkr.ecr.us-east-1.amazonaws.com
       - export IMAGE_REPO_NAME=908778560637.dkr.ecr.us-east-1.amazonaws.com/nodejswebapp
       - export IMAGE_TAG=latest
