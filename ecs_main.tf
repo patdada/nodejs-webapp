@@ -5,7 +5,7 @@ provider "aws" {
 
 # Create an ECS cluster
 resource "aws_ecs_cluster" "my_cluster" {
-  name = "vvd-cluster"
+  name = "vvd-ecs-cluster"
 }
 
 # Use an existing IAM role
@@ -20,7 +20,7 @@ resource "aws_ecs_task_definition" "my_task_definition" {
   network_mode             = "awsvpc"
   cpu                      = 1024
   memory                   = 2048
-  execution_role_arn       = data.aws_iam_role.existing_ecs_task_execution_role.arn
+  execution_role_arn       = data.aws_iam_role.existing_ecsTaskExecutionRole.arn
 
   container_definitions = <<EOF
 [
@@ -36,4 +36,19 @@ resource "aws_ecs_task_definition" "my_task_definition" {
   }
 ]
 EOF
+}
+
+# Create a service to run the task on the cluster
+resource "aws_ecs_service" "my_service" {
+  name            = "my-service"
+  cluster         = aws_ecs_cluster.my_cluster.id
+  task_definition = aws_ecs_task_definition.my_task_definition.arn
+  desired_count   = 1
+  launch_type     = "FARGATE"
+
+  network_configuration {
+    subnets          = ["subnet-0076c3f93f003fed7"]
+    security_groups  = ["sg-0c7be697e44641f5c"]
+    assign_public_ip = true
+  }
 }
