@@ -51,7 +51,7 @@ resource "aws_ecs_service" "my_service" {
 
   network_configuration {
     subnets          = ["subnet-0076c3f93f003fed7"]
-    security_groups  = ["sg-0c7be697e44641f5c"]
+    security_groups  = ["sg-0a45c9c0ed36abed8"]
     assign_public_ip = true
   }
 }
