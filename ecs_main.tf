@@ -5,12 +5,12 @@ provider "aws" {
 
 # Create an ECS cluster
 resource "aws_ecs_cluster" "my_cluster" {
-  name = "ferry-ecs-cluster"
+  name = "vvd-cluster"
 }
 
 # Use an existing IAM role
-data "aws_iam_role" "existing_ecs_task_execution_role" {
-  name = "ecs_task_execution_role"
+data "aws_iam_role" "existing_ecsTaskExecutionRole" {
+  name = "ecsTaskExecutionRole"
 }
 
 # Create a task definition
@@ -26,7 +26,7 @@ resource "aws_ecs_task_definition" "my_task_definition" {
 [
   {
     "name": "my-container",
-    "image": "908778560637.dkr.ecr.us-east-1.amazonaws.com/netflix-app",
+    "image": "patdada/folly-docker:v1.0.0",
     "portMappings": [
       {
         "containerPort": 80,
