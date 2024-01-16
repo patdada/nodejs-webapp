@@ -5,12 +5,25 @@ provider "aws" {
   
 # Create an ECS cluster
 resource "aws_ecs_cluster" "my_cluster" {
-  name = "vvd-ecs-cluster"
+  name = "vvd-cluster"
 }
    
 # Use an existing IAM role 
 resource "aws_iam_role" "my_ecs_task_execution_role" {
   name = "ecsTaskExecutionRole"
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Action = "sts:AssumeRole",
+        Effect = "Allow",
+        Principal = {
+          Service = "ecs-tasks.amazonaws.com",
+        },
+      },
+    ],
+  })
 }
 
 # Create a task definition
