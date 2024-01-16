@@ -2,14 +2,14 @@
 provider "aws" {
   region = "us-east-1"
 }
-
+  
 # Create an ECS cluster
 resource "aws_ecs_cluster" "my_cluster" {
   name = "vvd-ecs-cluster"
 }
-
-# Use an existing IAM role
-data "aws_iam_role" "existing_ecsTaskExecutionRole" {
+   
+# Use an existing IAM role 
+resource "aws_iam_role" "my_ecs_task_execution_role" {
   name = "ecsTaskExecutionRole"
 }
 
@@ -20,7 +20,7 @@ resource "aws_ecs_task_definition" "my_task_definition" {
   network_mode             = "awsvpc"
   cpu                      = 1024
   memory                   = 2048
-  execution_role_arn       = data.aws_iam_role.existing_ecsTaskExecutionRole.arn
+  execution_role_arn       = aws_iam_role.my_ecs_task_execution_role.arn
 
   container_definitions = <<EOF
 [
@@ -32,7 +32,10 @@ resource "aws_ecs_task_definition" "my_task_definition" {
         "containerPort": 80,
         "hostPort": 80
       }
-    ]
+    ],
+    "platform": {
+      "architecture": "ARM64"
+    }
   }
 ]
 EOF
