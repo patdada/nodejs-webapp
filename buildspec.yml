@@ -4,7 +4,11 @@ phases:
   install:
     commands:
       - echo Installing app dependencies...
-      - curl -LO https://dl.k8s.io/release/v1.27.1/bin/linux/arm64/kubectl   
+      - if [ $(uname -m) = "aarch64" ]; then
+          curl -LO https://dl.k8s.io/release/v1.27.1/bin/linux/arm64/kubectl;
+        else
+          curl -LO https://dl.k8s.io/release/v1.27.1/bin/linux/amd64/kubectl;
+        fi
       - chmod +x ./kubectl
       - mkdir -p $HOME/bin && cp ./kubectl $HOME/bin/kubectl && export PATH=$PATH:$HOME/bin
       - echo 'export PATH=$PATH:$HOME/bin' >> ~/.bashrc
