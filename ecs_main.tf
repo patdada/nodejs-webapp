@@ -5,7 +5,7 @@ provider "aws" {
 
 # Create an ECS cluster
 resource "aws_ecs_cluster" "my_cluster" {
-  name = "vvd-ecs-cluster"
+  name = "pato-ecs-cluster"
 }
 
 # Use an existing IAM role
