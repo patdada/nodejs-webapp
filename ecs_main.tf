@@ -5,30 +5,12 @@ provider "aws" {
 
 # Create an ECS cluster
 resource "aws_ecs_cluster" "my_cluster" {
-  name = "pato-ecs-cluster"
+  name = "bond-ecs-cluster"
 }
 
 # Use an existing IAM role
 data "aws_iam_role" "my_ecs_task_execution_role" {
   name = "ecsTaskExecutionRole"
-}
-
-# Create a multi-architecture Docker image
-# Make sure to build and push this image to a container registry that supports multi-architecture manifests
-# For example, Docker Hub, Amazon ECR, etc.
-
-# Create a security group within the VPC
-resource "aws_security_group" "my_security_group" {
-  name        = "my-security-group"
-  description = "Security group for ECS tasks"
-  vpc_id      = "vpc-04bd3360983de3da0"  # Replace with your actual VPC ID
-
-  ingress {
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
 }
 
 # Create a task definition
@@ -43,8 +25,8 @@ resource "aws_ecs_task_definition" "my_task_definition" {
   container_definitions = <<EOF
 [
   {
-    "name": "my-container-arm64",
-    "image": "908778560637.dkr.ecr.us-east-1.amazonaws.com/netflix-app:v1",
+    "name": "my-container",
+    "image": "patdada/folly-docker:latest",
     "portMappings": [
       {
         "containerPort": 80,
@@ -53,19 +35,6 @@ resource "aws_ecs_task_definition" "my_task_definition" {
     ],
     "platform": {
       "architecture": "ARM64"
-    }
-  },
-  {
-    "name": "my-container-amd64",
-    "image": "908778560637.dkr.ecr.us-east-1.amazonaws.com/netflix-app:v1",
-    "portMappings": [
-      {
-        "containerPort": 81,
-        "hostPort": 81
-      }
-    ],
-    "platform": {
-      "architecture": "AMD64"
     }
   }
 ]
@@ -82,7 +51,7 @@ resource "aws_ecs_service" "my_service" {
 
   network_configuration {
     subnets          = ["subnet-0d685514b95426815"]
-    security_groups  = [aws_security_group.my_security_group.id]
+    security_groups  = ["sg-0fa703c79e0aa6d74"]
     assign_public_ip = true
   }
 }
