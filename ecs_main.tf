@@ -13,7 +13,7 @@ data "aws_iam_role" "my_ecs_task_execution_role" {
   name = "ecsTaskExecutionRole"
 }
 
-# Create a task definition
+# Create a task definition for ARM64
 resource "aws_ecs_task_definition" "my_task_definition" {
   family                   = "my-task-family-test"
   requires_compatibilities = ["FARGATE"]
