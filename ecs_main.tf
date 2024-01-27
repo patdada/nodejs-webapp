@@ -13,6 +13,10 @@ data "aws_iam_role" "my_ecs_task_execution_role" {
   name = "ecsTaskExecutionRole"
 }
 
+# Create a multi-architecture Docker image
+# Make sure to build and push this image to a container registry that supports multi-architecture manifests
+# For example, Docker Hub, Amazon ECR, etc.
+
 # Create a task definition
 resource "aws_ecs_task_definition" "my_task_definition" {
   family                   = "my-task-family-test"
@@ -25,8 +29,8 @@ resource "aws_ecs_task_definition" "my_task_definition" {
   container_definitions = <<EOF
 [
   {
-    "name": "my-container",
-    "image": "patdada/folly-docker:v1.0.0",
+    "name": "my-container-arm64",
+    "image": "908778560637.dkr.ecr.us-east-1.amazonaws.com/netflix-app:v1",
     "portMappings": [
       {
         "containerPort": 80,
@@ -35,6 +39,19 @@ resource "aws_ecs_task_definition" "my_task_definition" {
     ],
     "platform": {
       "architecture": "ARM64"
+    }
+  },
+  {
+    "name": "my-container-amd64",
+    "image": "908778560637.dkr.ecr.us-east-1.amazonaws.com/netflix-app:v1",
+    "portMappings": [
+      {
+        "containerPort": 81,
+        "hostPort": 81
+      }
+    ],
+    "platform": {
+      "architecture": "AMD64"
     }
   }
 ]
@@ -50,8 +67,8 @@ resource "aws_ecs_service" "my_service" {
   launch_type     = "FARGATE"
 
   network_configuration {
-    subnets          = ["subnet-0076c3f93f003fed7"]
-    security_groups  = ["sg-0a45c9c0ed36abed8"]
+    subnets          = ["subnet-0d685514b95426815"]
+    security_groups  = ["sg-0fa703c79e0aa6d74"]
     assign_public_ip = true
   }
 }
