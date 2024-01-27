@@ -17,6 +17,20 @@ data "aws_iam_role" "my_ecs_task_execution_role" {
 # Make sure to build and push this image to a container registry that supports multi-architecture manifests
 # For example, Docker Hub, Amazon ECR, etc.
 
+# Create a security group within the VPC
+resource "aws_security_group" "my_security_group" {
+  name        = "my-security-group"
+  description = "Security group for ECS tasks"
+  vpc_id      = "vpc-04bd3360983de3da0"  # Replace with your actual VPC ID
+
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
 # Create a task definition
 resource "aws_ecs_task_definition" "my_task_definition" {
   family                   = "my-task-family-test"
@@ -68,7 +82,7 @@ resource "aws_ecs_service" "my_service" {
 
   network_configuration {
     subnets          = ["subnet-0d685514b95426815"]
-    security_groups  = ["sg-0fa703c79e0aa6d74"]
+    security_groups  = [aws_security_group.my_security_group.id]
     assign_public_ip = true
   }
 }
