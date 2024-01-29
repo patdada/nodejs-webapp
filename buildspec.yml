@@ -13,7 +13,7 @@ phases:
       - set -x
       - echo Logging in to Amazon ECR...
       - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 908778560637.dkr.ecr.us-east-1.amazonaws.com
-      - docker pull 908778560637.dkr.ecr.us-east-1.amazonaws.com/patdada/nodejs-webapp;latest || true  # Pull the existing image, ignore errors
+      - docker pull 908778560637.dkr.ecr.us-east-1.amazonaws.com/patdada/nodejs-webapp:latest || true  # Pull the existing image, ignore errors
 
   build:
     commands:
