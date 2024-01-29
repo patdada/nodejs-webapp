@@ -20,7 +20,7 @@ phases:
       - docker build -t patdada/nodejs-webapp .
       - docker tag patdada/nodejs-webapp:latest 908778560637.dkr.ecr.us-east-1.amazonaws.com/patdada/nodejs-webapp:latest
       - docker push 908778560637.dkr.ecr.us-east-1.amazonaws.com/patdada/nodejs-webapp:latest
-
+ 
   post_build:
     commands:
       - echo Build completed on $(date)
