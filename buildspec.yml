@@ -32,19 +32,14 @@ phases:
       - echo Building the Docker image...
       - docker login
       - docker build -t $IMAGE_REPO_NAME:$IMAGE_TAG .
+      - docker logout
 
   post_build:
     commands:
       - echo Build completed on $(date)
       - echo Pushing the Docker image...
       - docker push $IMAGE_REPO_NAME:$IMAGE_TAG
-      - echo Push the latest image to the cluster
+      - echo Pushing the latest image to cluster
       - kubectl apply -f deployment.yml
-
-  post_build:
-    commands:
-      - echo Build completed on $(date)
-      - echo Pushing the Docker image...
-      - docker push $IMAGE_REPO_NAME:$IMAGE_TAG
-      - echo Push the latest image to the cluster
-      - kubectl apply -f deployment.yml
+      - echo Cleaning up Docker images...
+      - docker rmi $IMAGE_REPO_NAME:$IMAGE_TAG
