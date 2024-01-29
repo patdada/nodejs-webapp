@@ -29,11 +29,11 @@ phases:
       - echo Building the Docker image...
       - docker build -t patdada/amazon:v1.0.0 .
 
-  post_build:
+   post_build:
     commands:
       - printenv
-    - echo Build completed on $(date)
-    - echo Pushing the Docker image...
-    - docker push patdada/amazon:v1.0.0
-    - echo Push the latest image to cluster
-    - kubectl apply -f deployment.yml
+      - echo Build completed on $(date)
+      - echo Pushing the Docker image...
+      - docker push patdada/amazon:v1.0.0
+      - echo Push the latest image to cluster
+      - kubectl apply -f deployment.yml
