@@ -21,7 +21,7 @@ phases:
       - echo Logging in to Amazon ECR...
       - aws_ecr_password=$(aws ecr get-login-password --region us-east-1)
       - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 908778560637.dkr.ecr.us-east-1.amazonaws.com
-      - export IMAGE_REPO_NAME=patdada/amazon
+      - export IMAGE_REPO_NAME=patdada/nodejswebapp
       - export IMAGE_TAG=v1.0.0
 
   build:
