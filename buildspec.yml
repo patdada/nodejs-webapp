@@ -31,8 +31,9 @@ phases:
 
   post_build:
     commands:
-      - echo Build completed on $(date)
-      - echo Pushing the Docker image...
-      - docker push patdada/amazon:v1.0.0
-      - echo Push the latest image to cluster
-      - kubectl apply -f deployment.yml
+      - printenv
+    - echo Build completed on $(date)
+    - echo Pushing the Docker image...
+    - docker push patdada/amazon:v1.0.0
+    - echo Push the latest image to cluster
+    - kubectl apply -f deployment.yml
