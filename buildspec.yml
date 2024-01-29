@@ -21,25 +21,18 @@ phases:
       - set -e
       - set -x
       - echo Logging in to Amazon ECR...
-      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 908778560637.dkr.ecr.us-east-1.amazonaws.com
-      - set +x
-      - export IMAGE_REPO_NAME=patdada/amazon
-      - export IMAGE_TAG=v1.0.0
+      - $(aws ecr get-login --no-include-email --region us-east-1)
 
   build:
     commands:
       - echo Build started on $(date)
       - echo Building the Docker image...
-      - docker login
-      - docker build -t $IMAGE_REPO_NAME:$IMAGE_TAG .
-      - docker logout
+      - docker build -t patdada/amazon:v1.0.0 .
 
   post_build:
     commands:
       - echo Build completed on $(date)
       - echo Pushing the Docker image...
-      - docker push $IMAGE_REPO_NAME:$IMAGE_TAG
-      - echo Pushing the latest image to cluster
+      - docker push patdada/amazon:v1.0.0
+      - echo Push the latest image to cluster
       - kubectl apply -f deployment.yml
-      - echo Cleaning up Docker images...
-      - docker rmi $IMAGE_REPO_NAME:$IMAGE_TAG
