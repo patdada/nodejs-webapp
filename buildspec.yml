@@ -3,7 +3,7 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-      docker: 23
+      docker: 23  # Adjust the Docker version to a valid one
     commands:
       - echo "Using Docker 23"
 
