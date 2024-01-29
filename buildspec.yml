@@ -13,19 +13,19 @@ phases:
       - set -x
       - echo Logging in to Amazon ECR...
       - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 908778560637.dkr.ecr.us-east-1.amazonaws.com
-      - docker pull 908778560637.dkr.ecr.us-east-1.amazonaws.com/patdada/amazon:v1.0.0 || true  # Pull the existing image, ignore errors
+      - docker pull 908778560637.dkr.ecr.us-east-1.amazonaws.com/patdada/nodejs-webapp;latest || true  # Pull the existing image, ignore errors
 
   build:
     commands:
       - echo Build started on $(date)
       - echo Building the Docker image...
-      - docker build -t patdada/amazon:v1.0.0 .
-
+      - docker buildx build --platform linux/amd64,linux/arm64 -t patdada/nodejs-webapp --push .
+ 
   post_build:
     commands:
       - printenv
       - echo Build completed on $(date)
       - echo Pushing the Docker image...
-      - docker push patdada/amazon:v1.0.0
+      - docker push patdada/nodejs-webapp:latest
       - echo Push the latest image to cluster
       - kubectl apply -f deployment.yml
