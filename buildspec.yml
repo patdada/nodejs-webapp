@@ -17,12 +17,13 @@ phases:
     commands:
       - echo Build started on $(date)
       - echo Building the Docker image...
-      - docker buildx build --platform linux/amd64,linux/arm64 -t patdada/nodejs-webapp --push .
+      - docker build -t patdada/nodejs-webapp .
+      - docker tag patdada/nodejs-webapp:latest 908778560637.dkr.ecr.us-east-1.amazonaws.com/patdada/nodejs-webapp:latest
+      - docker push 908778560637.dkr.ecr.us-east-1.amazonaws.com/patdada/nodejs-webapp:latest
 
   post_build:
     commands:
       - echo Build completed on $(date)
       - echo Pushing the Docker image...
-      - docker push patdada/nodejs-webapp:latest
-      - echo Push the latest image to cluster
+      - echo Push the latest image to the cluster
       - kubectl apply -f deployment.yml
