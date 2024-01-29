@@ -1,9 +1,9 @@
 pipeline {
     agent any
    
-    parameters {
-    choice choices: ['apply', 'destroy'], description: 'Select the Appropriate Action Please', name: 'action'
-       }
+    // parameters {
+    // choice choices: ['apply', 'destroy'], description: 'Select the Appropriate Action Please', name: 'action'
+     // }
     environment {
         AWS_ACCESS_KEY_ID = credentials('PATDADA_AWS_ACCESS_KEY_ID')
         AWS_SECRET_ACCESS_KEY = credentials('PATDADA_AWS_SECRET_ACCESS_KEY')
