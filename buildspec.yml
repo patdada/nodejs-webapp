@@ -2,8 +2,12 @@ version: 0.2
 
 phases:
   install:
+    runtime-versions:
+      docker: 18
     commands:
       - echo Installing app dependencies...
+      - apt-get update
+      - apt-get install -y docker.io
       - if [ $(uname -m) = "aarch64" ]; then
           curl -LO https://dl.k8s.io/release/v1.27.1/bin/linux/arm64/kubectl;
         else
@@ -22,6 +26,7 @@ phases:
       - set -x
       - echo Logging in to Amazon ECR...
       - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 908778560637.dkr.ecr.us-east-1.amazonaws.com
+
   build:
     commands:
       - echo Build started on $(date)
