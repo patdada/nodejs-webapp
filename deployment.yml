@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: nodesy-container  
-         //: badoacr.azurecr.io/nodejswebapp:latest
+        # image: badoacr.azurecr.io/nodejswebapp:latest
         image: patdada/nodejs-webapp:latest
         ports:
         - containerPort: 3000
@@ -35,6 +35,3 @@ spec:
       port: 80
       targetPort: 3000
   type: LoadBalancer
-
-
-
