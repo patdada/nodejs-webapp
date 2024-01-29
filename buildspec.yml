@@ -3,9 +3,9 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-      docker: 20
+      docker: 19
     commands:
-      - echo "Using Docker 20"
+      - echo "Using Docker 19"
 
   pre_build:
     commands:
