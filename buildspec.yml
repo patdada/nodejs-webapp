@@ -10,9 +10,10 @@ phases:
   pre_build:
     commands:
       - set -e
-      - set -x
-      - echo Logging in to Amazon ECR...
-      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 908778560637.dkr.ecr.us-east-1.amazonaws.com
+    - set -x
+    - echo Logging in to Amazon ECR...
+    - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 908778560637.dkr.ecr.us-east-1.amazonaws.com
+    - docker pull 908778560637.dkr.ecr.us-east-1.amazonaws.com/patdada/amazon:v1.0.0 || true  # Pull the existing image, ignore errors
 
   build:
     commands:
