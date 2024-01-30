@@ -17,7 +17,7 @@ spec:
       containers:
       - name: nodesy-container  
         # image: badoacr.azurecr.io/nodejswebapp:latest
-        image: 908778560637.dkr.ecr.us-east-1.amazonaws.com/netflix-app:v1
+        image: patdada/bella-docker:v1.0.0
         ports:
         - containerPort: 3000
 
