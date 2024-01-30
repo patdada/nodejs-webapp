@@ -11,15 +11,15 @@ phases:
     commands:
       - echo Logging in to Amazon ECR...
       - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 908778560637.dkr.ecr.us-east-1.amazonaws.com
-      - docker pull 908778560637.dkr.ecr.us-east-1.amazonaws.com/908778560637.dkr.ecr.us-east-1.amazonaws.com/netflix-app:v1 || true
+      - docker pull 908778560637.dkr.ecr.us-east-1.amazonaws.com/patdada/bella-docker:v1.0.0 || true
 
   build:
     commands:
       - echo Build started on $(date)
       - echo Building the Docker image...
-      - docker build -t 908778560637.dkr.ecr.us-east-1.amazonaws.com/netflix-app:v1
-      - docker tag patdada/nodejs-webapp:latest 908778560637.dkr.ecr.us-east-1.amazonaws.com/908778560637.dkr.ecr.us-east-1.amazonaws.com/netflix-app:v1
-      - docker push 908778560637.dkr.ecr.us-east-1.amazonaws.com/908778560637.dkr.ecr.us-east-1.amazonaws.com/netflix-app:v1 
+      - docker buildx build --platform linux/amd64,linux/arm64 -t patdada/bella-docker:v1.0.0 --push
+      - docker tag patdada/bella-docker:v1.0.0 908778560637.dkr.ecr.us-east-1.amazonaws.com/patdada/docker-bella:v1.0.0
+      - docker push 908778560637.dkr.ecr.us-east-1.amazonaws.com/patdada/bella-docker:v1.0.0
 
   post_build:
     commands:
