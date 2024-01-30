@@ -11,16 +11,16 @@ phases:
     commands:
       - echo Logging in to Amazon ECR...
       - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 908778560637.dkr.ecr.us-east-1.amazonaws.com
-      - docker pull 908778560637.dkr.ecr.us-east-1.amazonaws.com/patdada/nodejs-webapp:latest || true
+      - docker pull 908778560637.dkr.ecr.us-east-1.amazonaws.com/908778560637.dkr.ecr.us-east-1.amazonaws.com/netflix-app:v1 || true
 
   build:
     commands:
       - echo Build started on $(date)
       - echo Building the Docker image...
-      - docker build -t patdada/nodejs-webapp .
-      - docker tag patdada/nodejs-webapp:latest 908778560637.dkr.ecr.us-east-1.amazonaws.com/patdada/nodejs-webapp:latest
-      - docker push 908778560637.dkr.ecr.us-east-1.amazonaws.com/patdada/nodejs-webapp:latest
- 
+      - docker build -t 908778560637.dkr.ecr.us-east-1.amazonaws.com/netflix-app:v1
+      - docker tag patdada/nodejs-webapp:latest 908778560637.dkr.ecr.us-east-1.amazonaws.com/908778560637.dkr.ecr.us-east-1.amazonaws.com/netflix-app:v1
+      - docker push 908778560637.dkr.ecr.us-east-1.amazonaws.com/908778560637.dkr.ecr.us-east-1.amazonaws.com/netflix-app:v1 
+
   post_build:
     commands:
       - echo Build completed on $(date)
